@@ -20,11 +20,11 @@
 
   .card {
     background: white;
-    padding: 50px 40px;
+    padding: 90px 50px;
     border-radius: 25px;
     width: 320px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    position: relative;
+    position: relative; /* referencia real */
     overflow: hidden;
   }
 
@@ -51,11 +51,12 @@
     color: white;
   }
 
+  /* Posición inicial del NO */
   #no {
     background: #f1f1f1;
     position: absolute;
     left: 50%;
-    top: 220px;
+    top: 245px; /* justo debajo del botón Sí */
     transform: translateX(-50%);
     transition: transform 0.15s ease;
   }
@@ -71,29 +72,30 @@
   <p>
     <button id="yes" onclick="yesClick()">Sí 💕</button>
   </p>
-</div>
 
-<button id="no">No 😅</button>
+  <button id="no">No 😅</button>
+</div>
 
 <script>
   const btnNo = document.getElementById("no");
   const card = document.getElementById("card");
 
   function moveNo() {
-    const maxX = card.offsetWidth - btnNo.offsetWidth - 20;
-    const maxY = card.offsetHeight - btnNo.offsetHeight - 20;
+    const maxX = card.clientWidth - btnNo.offsetWidth;
+    const maxY = card.clientHeight - btnNo.offsetHeight;
 
     const x = Math.random() * maxX;
     const y = Math.random() * maxY;
 
     btnNo.style.left = x + "px";
     btnNo.style.top = y + "px";
+    btnNo.style.transform = "none";
   }
 
   // Desktop
   btnNo.addEventListener("mouseover", moveNo);
 
-  // Mobile (imposible de tocar)
+  // Mobile (imposible tocar)
   btnNo.addEventListener("touchstart", moveNo);
   btnNo.addEventListener("touchmove", moveNo);
 
