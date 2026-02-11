@@ -20,10 +20,12 @@
 
   .card {
     background: white;
-    padding: 70px;
+    padding: 50px 40px;
     border-radius: 25px;
-    max-width: 320px;
+    width: 320px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
   }
 
   h1 {
@@ -32,7 +34,7 @@
 
   p {
     font-size: 16px;
-    margin: 15px 0 25px;
+    margin: 15px 0;
   }
 
   button {
@@ -40,8 +42,8 @@
     padding: 12px 22px;
     border: none;
     border-radius: 20px;
-    margin: 10px;
     cursor: pointer;
+    touch-action: none;
   }
 
   #yes {
@@ -51,38 +53,60 @@
 
   #no {
     background: #f1f1f1;
-    position: center;
+    position: absolute;
+    left: 50%;
+    top: 220px;
+    transform: translateX(-50%);
+    transition: transform 0.15s ease;
   }
 </style>
 </head>
 
 <body>
 
-<div class="card">
+<div class="card" id="card">
   <h1>Vale 💌</h1>
+  <p><strong>¿Te gustaría ser mi San Valentín?</strong> 💖</p>
+
   <p>
-    <strong>¿Te gustaría ser mi San Valentín?</strong> 💖
-  </p>
- <p>
-    <button id="yes" onclick="yesClick()">Sí💕</button>
-  </p>
-   <p>
-     <button id="no" onmouseover="moveNo()">No😅</button>
+    <button id="yes" onclick="yesClick()">Sí 💕</button>
   </p>
 </div>
 
+<button id="no">No 😅</button>
+
 <script>
+  const btnNo = document.getElementById("no");
+  const card = document.getElementById("card");
+
   function moveNo() {
-    const btn = document.getElementById("no");
-    const x = Math.random() * 200 - 100;
-    const y = Math.random() * 200 - 100;
-    btn.style.transform = `translate(${x}px, ${y}px)`;
+    const maxX = card.offsetWidth - btnNo.offsetWidth - 20;
+    const maxY = card.offsetHeight - btnNo.offsetHeight - 20;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    btnNo.style.left = x + "px";
+    btnNo.style.top = y + "px";
   }
+
+  // Desktop
+  btnNo.addEventListener("mouseover", moveNo);
+
+  // Mobile (imposible de tocar)
+  btnNo.addEventListener("touchstart", moveNo);
+  btnNo.addEventListener("touchmove", moveNo);
 
   function yesClick() {
     document.body.innerHTML = `
-      <div style="text-align:center; padding:40px; font-size:20px;">
+      <div style="
+        text-align:center;
+        padding:40px;
+        font-size:22px;
+        color:#6b1b3a;
+      ">
         💖 Sabía que dirías que sí 💖<br><br>
+        Feliz San Valentín ✨
       </div>
     `;
   }
