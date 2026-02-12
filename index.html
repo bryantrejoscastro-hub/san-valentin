@@ -24,7 +24,7 @@
     border-radius: 25px;
     width: 320px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    position: relative; /* referencia real */
+    position: relative;
     overflow: hidden;
   }
 
@@ -51,14 +51,21 @@
     color: white;
   }
 
-  /* Posición inicial del NO */
   #no {
     background: #f1f1f1;
     position: absolute;
     left: 50%;
-    top: 245px; /* justo debajo del botón Sí */
+    top: 245px;
     transform: translateX(-50%);
     transition: transform 0.15s ease;
+  }
+
+  /* Contenedor del gato enojado */
+  .angry-cat {
+    position: absolute;
+    width: 120px;
+    pointer-events: none;
+    z-index: 10;
   }
 </style>
 </head>
@@ -66,7 +73,7 @@
 <body>
 
 <div class="card" id="card">
-  <h1>Vale💕 </h1>
+  <h1>Vale💕</h1>
   <p><strong>¿Te gustaría ser mi San Valentín?</strong> 💖</p>
 
   <p>
@@ -81,6 +88,8 @@
   const card = document.getElementById("card");
 
   function moveNo() {
+    showAngryCat();
+
     const maxX = card.clientWidth - btnNo.offsetWidth;
     const maxY = card.clientHeight - btnNo.offsetHeight;
 
@@ -92,10 +101,40 @@
     btnNo.style.transform = "none";
   }
 
+  function showAngryCat() {
+    const oldCat = document.querySelector(".angry-cat");
+    if (oldCat) oldCat.remove();
+
+    const cat = document.createElement("div");
+    cat.className = "angry-cat";
+    cat.style.left = btnNo.offsetLeft + btnNo.offsetWidth + 10 + "px";
+    cat.style.top = btnNo.offsetTop - 20 + "px";
+
+    cat.innerHTML = `
+      <div class="tenor-gif-embed"
+        data-postid="5664908679004854891"
+        data-share-method="host"
+        data-aspect-ratio="1"
+        data-width="100%">
+      </div>
+    `;
+
+    card.appendChild(cat);
+
+    const script = document.createElement("script");
+    script.src = "https://tenor.com/embed.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    setTimeout(() => {
+      cat.remove();
+    }, 1200);
+  }
+
   // Desktop
   btnNo.addEventListener("mouseover", moveNo);
 
-  // Mobile (imposible tocar)
+  // Mobile
   btnNo.addEventListener("touchstart", moveNo);
   btnNo.addEventListener("touchmove", moveNo);
 
@@ -107,10 +146,22 @@
         font-size:22px;
         color:#6b1b3a;
       ">
-        💖 Lo sabia,no lo dude ni un segundo,paso por vos a las 4 💖<br><br>
-        Feliz San Valentín ✨
+        💖 Lo sabía, no lo dudé ni un segundo, paso por vos a las 4 💖<br><br>
+        Feliz San Valentín ✨<br><br>
+
+        <div class="tenor-gif-embed"
+          data-postid="1204032898790353906"
+          data-share-method="host"
+          data-aspect-ratio="1"
+          data-width="100%">
+        </div>
       </div>
     `;
+
+    const script = document.createElement("script");
+    script.src = "https://tenor.com/embed.js";
+    script.async = true;
+    document.body.appendChild(script);
   }
 </script>
 
